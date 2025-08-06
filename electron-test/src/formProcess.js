@@ -8,10 +8,17 @@ form.addEventListener('submit', async (e) => {
 
     console.log(file, 'file data');
     // call the manipulation functions
+
     
+    //return object with image data
   } catch (err) {
     console.log(err);
   }
 
   console.log('form was submitted');
 });
+
+
+//render here
+
+//post to db
