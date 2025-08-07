@@ -473,15 +473,32 @@ var check = function() {
 };
 var electronSquirrelStartup = check();
 const started = /* @__PURE__ */ getDefaultExportFromCjs(electronSquirrelStartup);
+const { parseFile } = require("music-metadata");
+const preloadPath = path$1.join(__dirname, "preload.js");
+console.log("Preload path:", preloadPath);
+console.log("Preload file exists:", require("fs").existsSync(preloadPath));
 if (started) {
   require$$3$1.app.quit();
 }
+require$$3$1.ipcMain.handle("parse-metadata", async (event, filePath) => {
+  try {
+    const metadata = await parseFile(filePath);
+    console.log(metadata, "main js metadata");
+    return metadata;
+  } catch (error) {
+    console.error(`Error parsing metadata for ${filePath}:`, error.message);
+    throw error;
+  }
+});
 const createWindow = () => {
   const mainWindow = new require$$3$1.BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path$1.join(__dirname, "preload.js")
+      preload: path$1.join(__dirname, "preload.js"),
+      nodeIntegration: false,
+      contextIsolation: true
+      //less secure**
     }
   });
   {

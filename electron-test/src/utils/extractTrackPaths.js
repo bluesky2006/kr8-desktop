@@ -1,9 +1,7 @@
-import { readPlaylistFile } from "./readPlaylistFile";
-
-export async function extractTrackPaths() {
+export async function extractTrackPaths(file) {
   try {
-    const rawData = await readPlaylistFile();
-    return rawData
+    console.log(file, "ETP");
+    return file
       .trim()
       .split(/\r?\n/)
       .filter((line) => line && !line.startsWith("#"));

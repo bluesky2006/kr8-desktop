@@ -1,11 +1,9 @@
-import { extractTrackPaths } from "./extractTrackPaths";
-import { metadataParser } from "./metadata-parser";
+import { metadataParser } from "./metadataParser";
 
-export async function getParsedTrackMetadata() {
+export async function getParsedTrackMetadata(trackPathArray) {
   try {
-    const trackPaths = await extractTrackPaths();
     const trackMetadataList = await Promise.all(
-      trackPaths.map((filePath, index) => metadataParser(filePath, index))
+      trackPathArray.map((filePath, index) => metadataParser(filePath, index))
     );
     return trackMetadataList;
   } catch (error) {
