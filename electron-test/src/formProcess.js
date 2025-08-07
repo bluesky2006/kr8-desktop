@@ -1,5 +1,6 @@
 import { extractTrackPaths } from './utils/extractTrackPaths';
 import { getParsedTrackMetadata } from './utils/getParsedTrackMetadata';
+import { updateUi } from './updateUi';
 
 export const form = document.getElementById('form');
 form.addEventListener('submit', async (e) => {
@@ -13,8 +14,9 @@ form.addEventListener('submit', async (e) => {
     const trackPathArray = await extractTrackPaths(file);
 
     const playlistObject = await getParsedTrackMetadata(trackPathArray);
-
-    return playlistObject;
+    console.log(playlistObject) 
+    updateUi(playlistObject);
+    
   } catch (err) {
     console.log(err);
   }
