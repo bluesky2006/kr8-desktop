@@ -498,7 +498,6 @@ const createWindow = () => {
       preload: path$1.join(__dirname, "preload.js"),
       nodeIntegration: false,
       contextIsolation: true
-      //less secure**
     }
   });
   {

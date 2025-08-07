@@ -5,12 +5,30 @@
     <title>kr8</title>
   </head>
   <body>
-    <h1>Upload your files here:</h1>
-    <form id="form">
-      <label for="input"></label>
-      <input type="file" id="file-input" name="playlist" />
-      <button type="submit">Submit</button>
-    </form>
+    <section
+      class="flex flex-col justify-between items-center bg-yellow-100 p-5 gap-10 rounded-lg"
+    >
+      <h1 class="text-4xl font-bold">kr8</h1>
+      <h2>Upload your playlist file here:</h2>
+      <form id="form">
+        <label for="input"></label>
+        <div class="flex">
+          <input
+            type="file"
+            id="file-input"
+            name="playlist"
+            class="file:bg-gray-100 file:px-2 file:py-0.5 file:rounded-sm file:border file:border-black"
+          />
+          <button
+            type="submit"
+            class="bg-gray-100 px-2 py-0.5 rounded-sm border border-black"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+      <div id="ui-container"></div>
+    </section>
 
     <script type="module" src="./src/formProcess.js"></script>
     <script type="module" src="/src/renderer.js"></script>
