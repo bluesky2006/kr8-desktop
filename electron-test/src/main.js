@@ -1,11 +1,28 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
+const { parseFile } = require('music-metadata'); 
+
+const preloadPath = path.join(__dirname, 'preload.js');
+console.log('Preload path:', preloadPath);
+console.log('Preload file exists:', require('fs').existsSync(preloadPath));
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
 }
+
+// Handle the metadata parsing in the main process
+ipcMain.handle('parse-metadata', async (event, filePath) => {
+  try {
+    const metadata = await parseFile(filePath);
+    console.log(metadata, 'main js metadata');
+    return metadata;
+  } catch (error) {
+    console.error(`Error parsing metadata for ${filePath}:`, error.message);
+    throw error;
+  }
+});
 
 const createWindow = () => {
   // Create the browser window.
@@ -14,6 +31,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true, 
     },
   });
 
@@ -21,7 +40,9 @@ const createWindow = () => {
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    mainWindow.loadFile(
+      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
+    );
   }
 
   // Open the DevTools.
