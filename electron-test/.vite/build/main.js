@@ -483,7 +483,6 @@ if (started) {
 require$$3$1.ipcMain.handle("parse-metadata", async (event, filePath) => {
   try {
     const metadata = await parseFile(filePath);
-    console.log(metadata, "main js metadata");
     return metadata;
   } catch (error) {
     console.error(`Error parsing metadata for ${filePath}:`, error.message);
