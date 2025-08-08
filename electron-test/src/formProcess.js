@@ -6,6 +6,9 @@ const dropZone = document.getElementById("drop_zone");
 const dropZoneWrapper = document.getElementById("drop_zone_wrapper");
 const startAgainButton = document.getElementById("start_again");
 const uiContainer = document.getElementById("ui-container");
+const circleGroup = document.querySelector(".circle-group");
+const mainTitle = document.getElementById("main_title");
+const buttons_wrapper = document.getElementById("buttons_wrapper");
 
 dropZone.addEventListener("dragover", (e) => {
   e.preventDefault();
@@ -44,6 +47,9 @@ dropZone.addEventListener("drop", async (e) => {
 
     dropZoneWrapper.classList.add("hidden");
     buttons_wrapper.classList.remove("hidden");
+    circleGroup.classList.add("hidden");
+    mainTitle.classList.remove("mb-36");
+    mainTitle.classList.add("mb-10");
   } catch (err) {
     console.error("Drop error:", err);
   }
@@ -52,6 +58,9 @@ dropZone.addEventListener("drop", async (e) => {
 startAgainButton.addEventListener("click", () => {
   uiContainer.innerHTML = "";
 
-  buttons_wrapper.classList.add("hidden");
   dropZoneWrapper.classList.remove("hidden");
+  buttons_wrapper.classList.add("hidden");
+  circleGroup.classList.remove("hidden");
+  mainTitle.classList.remove("mb-10");
+  mainTitle.classList.add("mb-36");
 });
