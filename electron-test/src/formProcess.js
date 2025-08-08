@@ -2,16 +2,34 @@ import { extractTrackPaths } from "./utils/extractTrackPaths";
 import { getParsedTrackMetadata } from "./utils/getParsedTrackMetadata";
 import { updateUi } from "./updateUi";
 
-export const form = document.getElementById("form");
-form.addEventListener("submit", async (e) => {
+const dropZone = document.getElementById("drop_zone");
+const dropZoneWrapper = document.getElementById("drop_zone_wrapper");
+const startAgainButton = document.getElementById("start_again");
+const uiContainer = document.getElementById("ui-container");
+
+dropZone.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropZone.classList.add("bg-red-100");
+});
+
+dropZone.addEventListener("dragleave", () => {
+  dropZone.classList.remove("bg-red-100");
+});
+
+dropZone.addEventListener("drop", async (e) => {
+  e.preventDefault();
+  dropZone.classList.remove("bg-red-100");
+
   try {
-    e.preventDefault();
-    const input = document.getElementById("file-input");
-    const data = input.files[0];
-    console.log(data, "data");
+    const droppedFiles = e.dataTransfer.files;
+    if (!droppedFiles.length) {
+      console.warn("No file dropped.");
+      return;
+    }
+
+    const data = droppedFiles[0];
     const file = await data.text();
 
-    // call the manipulation functions
     const trackPathArray = await extractTrackPaths(file);
     const playlistObject = await getParsedTrackMetadata(trackPathArray);
 
@@ -21,16 +39,19 @@ form.addEventListener("submit", async (e) => {
       playlist_name: playlistName,
       playlist_tracks: [...playlistObject],
     };
-    console.log(nestedPlaylistObject, "nested jobber");
 
     updateUi(nestedPlaylistObject);
-  } catch (err) {
-    console.log(err);
-  }
 
-  console.log("form was submitted");
+    dropZoneWrapper.classList.add("hidden");
+    buttons_wrapper.classList.remove("hidden");
+  } catch (err) {
+    console.error("Drop error:", err);
+  }
 });
 
-//render here
+startAgainButton.addEventListener("click", () => {
+  uiContainer.innerHTML = "";
 
-//post to db
+  buttons_wrapper.classList.add("hidden");
+  dropZoneWrapper.classList.remove("hidden");
+});
