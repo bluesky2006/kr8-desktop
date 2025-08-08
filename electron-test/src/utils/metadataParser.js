@@ -1,5 +1,3 @@
-// import { parseFile } from 'music-metadata';
-
 export async function metadataParser(filePath, index) {
   try {
     const metadata = await window.electronAPI.parseMetadata(filePath);
