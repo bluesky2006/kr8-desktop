@@ -5,6 +5,6 @@ export function renderImageFromUint8(imageData, container) {
   const img = document.createElement("img");
   img.src = url;
   img.alt = "Track artwork";
-  img.className = "w-24 h-24 object-cover rounded ml-4"; // right-aligned image
+  img.className = "w-24 h-24 object-cover rounded"; // right-aligned image
   container.appendChild(img);
 }
