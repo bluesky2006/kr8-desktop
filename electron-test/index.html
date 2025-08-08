@@ -4,30 +4,49 @@
     <meta charset="UTF-8" />
     <title>kr8</title>
   </head>
-  <body>
+  <body
+    class="min-h-screen w-full bg-gray-900 flex items-center justify-center"
+  >
     <section
-      class="flex flex-col justify-between items-center bg-yellow-100 p-5 gap-10 rounded-lg"
+      class="flex flex-col justify-between items-center bg-gray-100 py-10 px-5 gap-10 rounded-lg w-[90vw]"
     >
-      <h1 class="text-4xl font-bold">kr8</h1>
-      <h2>Upload your playlist file here:</h2>
+      <h1 class="text-8xl font-bold text-red-400">kr8</h1>
+
       <form id="form">
-        <label for="input"></label>
-        <div class="flex">
-          <input
-            type="file"
-            id="file-input"
-            name="playlist"
-            class="file:bg-gray-100 file:px-2 file:py-0.5 file:rounded-sm file:border file:border-black"
-          />
-          <button
-            type="submit"
-            class="bg-gray-100 px-2 py-0.5 rounded-sm border border-black"
+        <div id="drop_zone_wrapper" class="w-full">
+          <div
+            id="drop_zone"
+            class="border-2 border-gray-300 border-dashed w-full p-20 flex rounded-xl items-center justify-center text-center"
           >
-            Submit
-          </button>
+            <p>Drag your playlist here</p>
+          </div>
+        </div>
+        <div
+          id="buttons_wrapper"
+          class="flex justify-between items-center w-full gap-4 hidden"
+        >
+          <div id="start_again_wrapper">
+            <button
+              id="start_again"
+              type="button"
+              class="whitespace-nowrap bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500"
+            >
+              Start again
+            </button>
+          </div>
+          <div id="upload_button_wrapper">
+            <button
+              id="upload_button"
+              type="button"
+              class="whitespace-nowrap bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500"
+            >
+              Upload
+            </button>
+          </div>
         </div>
       </form>
-      <div id="ui-container"></div>
+
+      <div id="ui-container" class="w-full px-4"></div>
     </section>
 
     <script type="module" src="./src/formProcess.js"></script>
