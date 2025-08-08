@@ -1,6 +1,5 @@
 export async function extractTrackPaths(file) {
   try {
-    console.log(file, "ETP");
     return file
       .trim()
       .split(/\r?\n/)

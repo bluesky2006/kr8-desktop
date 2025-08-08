@@ -1,51 +1,70 @@
 import { renderImageFromUint8 } from "./utils/imageRenderer";
+import {
+  createEditableTitle,
+  createPill,
+  convertLengthToTime,
+} from "./utils/uiHelpers";
 
 const uiContainer = document.getElementById("ui-container");
-console.log(uiContainer, "getting ui div");
 
 export const updateUi = (nestedPlaylistObject) => {
-  console.log(nestedPlaylistObject, "obj");
+  console.log(nestedPlaylistObject, "nestedPlaylistObject");
 
   uiContainer.innerHTML = "";
 
-  const h1 = document.createElement("h1");
-  h1.textContent = nestedPlaylistObject.playlist_name;
-  h1.className = "text-2xl font-bold mb-4";
-  uiContainer.appendChild(h1);
+  // Append editable title input
+  const titleInput = createEditableTitle(nestedPlaylistObject);
+  uiContainer.appendChild(titleInput);
 
+  // Render each track
   nestedPlaylistObject.playlist_tracks.forEach((track) => {
     const trackDiv = document.createElement("div");
     trackDiv.className =
-      "flex justify-between items-center mb-4 p-3 rounded bg-white shadow";
+      "flex flex-col justify-between mb-4 p-3 rounded bg-white shadow";
 
-    // Left side: title + artist
+    // Row: text + image
+    const topRow = document.createElement("div");
+    topRow.className = "flex flex-row justify-between items-start gap-4";
+
+    // Text container
     const textDiv = document.createElement("div");
-    textDiv.className = "flex flex-col";
-
-    const p = document.createElement("p");
-    p.textContent = track.track_id;
-    p.className = "text-base font-normal";
+    textDiv.className = "flex flex-col flex-1 min-w-0";
 
     const h2 = document.createElement("h2");
     h2.textContent = track.track_title || "Untitled Track";
-    h2.className = "text-lg font-semibold leading-snug";
+    h2.className = "text-lg font-semibold leading-snug break-words";
 
     const h3 = document.createElement("h3");
     h3.textContent = track.track_artist || "Unknown Artist";
-    h3.className = "text-base font-medium text-gray-600";
+    h3.className = "text-base font-medium text-gray-600 truncate";
 
-    textDiv.appendChild(p);
     textDiv.appendChild(h2);
     textDiv.appendChild(h3);
-    trackDiv.appendChild(textDiv);
+    topRow.appendChild(textDiv);
 
-    // Right side: image
+    // Image container
     if (track.track_image) {
-      renderImageFromUint8(track.track_image, trackDiv);
+      const imageContainer = document.createElement("div");
+      imageContainer.className = "w-24 h-24 shrink-0";
+      renderImageFromUint8(track.track_image, imageContainer);
+      topRow.appendChild(imageContainer);
     }
 
+    trackDiv.appendChild(topRow);
+
+    // Bottom info: pills
+    const infoDiv = document.createElement("div");
+    infoDiv.className = "flex flex-wrap items-center gap-2 text-sm mt-2";
+
+    infoDiv.appendChild(createPill(`#${track.track_id}`));
+    infoDiv.appendChild(
+      createPill(track.track_bpm ? `${track.track_bpm} BPM` : "BPM N/A")
+    );
+    infoDiv.appendChild(
+      createPill(convertLengthToTime(track.track_length) || "Length N/A")
+    );
+
+    trackDiv.appendChild(infoDiv);
     uiContainer.appendChild(trackDiv);
   });
-
-  console.log("ui rendered");
 };
