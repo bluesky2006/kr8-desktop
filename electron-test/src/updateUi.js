@@ -4,6 +4,7 @@ import {
   createPill,
   convertLengthToTime,
 } from "./utils/uiHelpers";
+import { getFormattedDateTime } from "./utils/getFormattedDateTime.js";
 
 const uiContainer = document.getElementById("ui-container");
 
@@ -16,11 +17,12 @@ export const updateUi = (nestedPlaylistObject) => {
   const titleInput = createEditableTitle(nestedPlaylistObject);
   uiContainer.appendChild(titleInput);
 
-  const now = new Date();
-  const timeOnly = now.toTimeString().split(" ")[0];
+  const { dbFormat, friendlyFormat } = getFormattedDateTime();
+
   const dateField = document.createElement("p");
-  dateField.textContent = `Created on ${now.toDateString()} at ${timeOnly}`;
+  dateField.textContent = `Created on ${friendlyFormat}`;
   dateField.className = "italic text-sm mb-4";
+
   uiContainer.appendChild(dateField);
 
   // Render each track
