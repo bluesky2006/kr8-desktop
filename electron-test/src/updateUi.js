@@ -16,6 +16,13 @@ export const updateUi = (nestedPlaylistObject) => {
   const titleInput = createEditableTitle(nestedPlaylistObject);
   uiContainer.appendChild(titleInput);
 
+  const now = new Date();
+  const timeOnly = now.toTimeString().split(" ")[0];
+  const dateField = document.createElement("p");
+  dateField.textContent = `Created on ${now.toDateString()} at ${timeOnly}`;
+  dateField.className = "italic text-sm mb-4";
+  uiContainer.appendChild(dateField);
+
   // Render each track
   nestedPlaylistObject.playlist_tracks.forEach((track) => {
     const trackDiv = document.createElement("div");
