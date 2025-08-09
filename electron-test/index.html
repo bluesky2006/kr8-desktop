@@ -14,22 +14,23 @@
       <form id="form">
         <div
           id="drop_zone_wrapper"
-          class="relative z-30 w-full overflow-visible border-2 border-gray-300 border-dashed rounded-bl-lg rounded-br-lg"
+          class="relative z-30 w-full overflow-visible border-2 border-gray-300 border-dashed rounded-lg"
         >
-          <!-- RECORD (circle group) -->
           <div
-            class="circle-group pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-24 w-52 h-52 bg-red-400 rounded-full z-0 transition-transform duration-500 ease-out will-change-transform"
+            class="circle-group pointer-events-none absolute left-1/2 w-56 h-56 bg-black rounded-full z-0 will-change-transform transition-transform duration-500 ease-out"
+            style="
+              transform: translate(-50%, var(--record-y));
+              --record-y: -7.1rem;
+            "
           >
             <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-12 h-12 bg-white rounded-full"></div>
+              <div class="w-14 h-14 bg-red-400 rounded-full"></div>
             </div>
             <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+              <div class="w-[6px] h-[6px] bg-black rounded-full"></div>
             </div>
           </div>
-
-          <!-- white box background -->
-          <div class="relative bg-white rounded-bl-lg rounded-br-lg z-10">
+          <div class="relative bg-white rounded-lg z-10">
             <div
               id="drop_zone"
               class="relative z-20 w-full px-16 py-28 flex items-center justify-center text-center"
@@ -46,7 +47,7 @@
             <button
               id="start_again"
               type="button"
-              class="whitespace-nowrap bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500"
+              class="whitespace-nowrap bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600"
             >
               Start again
             </button>

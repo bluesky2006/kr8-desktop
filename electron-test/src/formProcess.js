@@ -10,39 +10,30 @@ const circleGroup = document.querySelector(".circle-group"); // record
 const mainTitle = document.getElementById("main_title");
 const buttons_wrapper = document.getElementById("buttons_wrapper");
 
-// --- record motion helpers ---
-const clearTranslateY = () => {
-  if (!circleGroup) return;
-  // remove ANY translate-y class (positive or negative)
-  [...circleGroup.classList].forEach((c) => {
-    if (c.startsWith("translate-y-") || c.startsWith("-translate-y-")) {
-      circleGroup.classList.remove(c);
-    }
+if (circleGroup) {
+  circleGroup.style.setProperty("--record-y", "-7.1rem");
+  requestAnimationFrame(() => {
+    circleGroup.classList.add(
+      "transition-transform",
+      "duration-500",
+      "ease-out"
+    );
   });
+}
+
+const setRecordY = (val) => {
+  if (circleGroup) {
+    circleGroup.style.setProperty("--record-y", val);
+  }
 };
 
-const peekRecord = () => {
-  if (!circleGroup) return;
-  clearTranslateY();
-  circleGroup.classList.add("-translate-y-6"); // half-peek
-};
+const peekRecord = () => setRecordY("-1.5rem");
+const resetRecord = () => setRecordY("-7.1rem");
+const slideInRecord = () => setRecordY("1.5rem");
 
-const resetRecord = () => {
-  if (!circleGroup) return;
-  clearTranslateY();
-  circleGroup.classList.add("-translate-y-24"); // back above box
-};
-
-const slideInRecord = () => {
-  if (!circleGroup) return;
-  clearTranslateY();
-  circleGroup.classList.add("translate-y-10"); // fully inside the box
-};
-
-// --- drag UX ---
 dropZone.addEventListener("dragenter", (e) => {
   e.preventDefault();
-  dropZone.classList.add("bg-red-100"); // visual cue
+  dropZone.classList.add("bg-red-100");
   peekRecord();
 });
 
@@ -62,12 +53,10 @@ dropZone.addEventListener("drop", async (e) => {
   try {
     const droppedFiles = e.dataTransfer.files;
     if (!droppedFiles.length) {
-      console.warn("No file dropped.");
       resetRecord();
       return;
     }
 
-    // animate the record sliding in
     slideInRecord();
 
     const data = droppedFiles[0];
@@ -77,23 +66,19 @@ dropZone.addEventListener("drop", async (e) => {
     const playlistObject = await getParsedTrackMetadata(trackPathArray);
 
     const playlistName = data.name.replace(/\.[^/.]+$/, "");
-
     const nestedPlaylistObject = {
       playlist_name: playlistName,
       playlist_tracks: [...playlistObject],
     };
 
-    // wait for the slide-in to complete before swapping UI (duration-500)
+    // wait for slide-in to complete (matches duration-500)
     setTimeout(() => {
       updateUi(nestedPlaylistObject);
 
       dropZoneWrapper.classList.add("hidden");
       buttons_wrapper.classList.remove("hidden");
+      circleGroup?.classList.add("hidden");
 
-      if (circleGroup) {
-        resetRecord(); // set starting transform while hidden
-        circleGroup.classList.remove("hidden");
-      }
       mainTitle.classList.remove("mb-36");
       mainTitle.classList.add("mb-10");
     }, 550);
@@ -110,9 +95,8 @@ startAgainButton.addEventListener("click", () => {
   dropZoneWrapper.classList.remove("hidden");
 
   if (circleGroup) {
-    // Reset position BEFORE unhiding
-    resetRecord();
-    circleGroup.classList.remove("hidden");
+    resetRecord(); // set Y while still hidden
+    circleGroup.classList.remove("hidden"); // then show
   }
 
   mainTitle.classList.remove("mb-10");
