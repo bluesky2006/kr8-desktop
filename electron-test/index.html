@@ -11,27 +11,28 @@
       class="relative flex flex-col justify-between items-center bg-gray-100 py-10 px-5 rounded-lg w-[90vw]"
     >
       <h1 id="main_title" class="text-8xl font-bold text-red-400 mb-36">kr8</h1>
-      <div
-        class="circle-group absolute top-64 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0"
-      >
-        <div class="relative w-52 h-52 bg-red-400 rounded-full">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-12 h-12 bg-white rounded-full z-10"></div>
-          </div>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-2 h-2 bg-red-400 rounded-full z-20"></div>
-          </div>
-        </div>
-      </div>
       <form id="form">
         <div
           id="drop_zone_wrapper"
-          class="relative z-30 w-full border-2 border-gray-300 border-dashed rounded-bl-lg rounded-br-lg"
+          class="relative z-30 w-full overflow-visible border-2 border-gray-300 border-dashed rounded-bl-lg rounded-br-lg"
         >
-          <div class="bg-white rounded-bl-lg rounded-br-lg">
+          <!-- RECORD (circle group) -->
+          <div
+            class="circle-group pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-24 w-52 h-52 bg-red-400 rounded-full z-0 transition-transform duration-500 ease-out will-change-transform"
+          >
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 bg-white rounded-full"></div>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+            </div>
+          </div>
+
+          <!-- white box background -->
+          <div class="relative bg-white rounded-bl-lg rounded-br-lg z-10">
             <div
               id="drop_zone"
-              class="w-full px-16 py-28 flex items-center justify-center text-center transition-colors"
+              class="relative z-20 w-full px-16 py-28 flex items-center justify-center text-center"
             >
               <p>Drag your playlist here</p>
             </div>
