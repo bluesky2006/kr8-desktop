@@ -1,0 +1,180 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>32×32 Pixelly Seeded Art (4 colours)</title>
+<style>
+  :root {
+    color-scheme: dark;
+  }
+  body {
+    margin: 0;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    background: #111;
+    gap: 12px;
+  }
+  canvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+  button {
+    padding: 0.6rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid #2a2a2a;
+    background: #181818;
+    color: #eee;
+    cursor: pointer;
+  }
+</style>
+<canvas id="px" width="512" height="512"></canvas>
+<div>
+  <button id="regen">Regenerate (same seed)</button>
+  <button id="download">Download PNG</button>
+</div>
+
+<script>
+  // ---- stable seed from object ----
+  function stableStringify(o) {
+    if (o === null || typeof o !== 'object') return JSON.stringify(o);
+    if (Array.isArray(o)) return '[' + o.map(stableStringify).join(',') + ']';
+    const keys = Object.keys(o).sort();
+    return '{' + keys.map((k) => JSON.stringify(k) + ':' + stableStringify(o[k])).join(',') + '}';
+  }
+  function hash32(str) {
+    let h = 0x811c9dc5 >>> 0;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+      h ^= h >>> 13;
+    }
+    return h >>> 0;
+  }
+  function mulberry32(a) {
+    let t = a >>> 0;
+    return () => {
+      t += 0x6d2b79f5;
+      let x = Math.imul(t ^ (t >>> 15), 1 | t);
+      x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+      return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const pick = (rng, arr) => arr[Math.floor(rng() * arr.length)];
+
+  // ---- tiny palettes ----
+  const PALETTES = [
+    [
+      '#1a1c2c',
+      '#5d275d',
+      '#b13e53',
+      '#ef7d57',
+      '#ffcd75',
+      '#a7f070',
+      '#38b764',
+      '#257179',
+      '#29366f',
+      '#3b5dc9',
+      '#41a6f6',
+      '#73eff7',
+    ],
+    ['#0d0c1b', '#b80c09', '#e0e0e2', '#6a4c93', '#1982c4', '#8ac926', '#ffca3a', '#ff595e'],
+    ['#0f0f0f', '#2a2a2a', '#f2f2f2', '#ff6b6b', '#4ecdc4', '#ffe66d'],
+    ['#111827', '#374151', '#f9fafb', '#10b981', '#3b82f6', '#f472b6', '#f59e0b'],
+  ];
+
+  // ---- core generator ----
+  function generatePixelArtFromObject(obj, { grid = 32, scale = 16, border = true } = {}) {
+    const seed = hash32(stableStringify(obj));
+    const rng = mulberry32(seed);
+
+    // pick a palette and reduce to exactly 4 colours total
+    const pal = pick(rng, PALETTES).slice();
+    const bg = pal.splice(Math.floor(rng() * pal.length), 1)[0]; // background colour
+    const inks = pal.sort(() => rng() - 0.5).slice(0, 3); // 3 inks
+
+    // Build grid
+    const g = Array.from({ length: grid }, () => Array(grid).fill(-1));
+
+    // Blob painter
+    function blob(cx, cy, r, colorIdx) {
+      for (let y = 0; y < grid; y++) {
+        for (let x = 0; x < grid; x++) {
+          const dx = x - cx + (rng() - 0.5) * 0.25,
+            dy = y - cy + (rng() - 0.5) * 0.25;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < r * (0.9 + rng() * 0.2)) g[y][x] = colorIdx;
+        }
+      }
+    }
+
+    // Large blobs
+    const big = 4 + Math.floor(rng() * 4);
+    for (let i = 0; i < big; i++) {
+      blob(
+        grid * rng(),
+        grid * rng(),
+        grid * (0.25 + rng() * 0.2),
+        Math.floor(rng() * inks.length)
+      );
+    }
+
+    // Small blobs
+    const small = 12 + Math.floor(rng() * 8);
+    for (let i = 0; i < small; i++) {
+      blob(
+        grid * rng(),
+        grid * rng(),
+        grid * (0.06 + rng() * 0.1),
+        Math.floor(rng() * inks.length)
+      );
+    }
+
+    // Render
+    const canvas = document.getElementById('px');
+    canvas.width = grid * scale;
+    canvas.height = grid * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let y = 0; y < grid; y++) {
+      for (let x = 0; x < grid; x++) {
+        const idx = g[y][x];
+        if (idx >= 0) {
+          ctx.fillStyle = inks[idx];
+          ctx.fillRect(x * scale, y * scale, scale, scale);
+        }
+      }
+    }
+
+    if (border) {
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0.5, 0.5, canvas.width - 1, canvas.height - 1);
+    }
+
+    return { seed, bg, inks };
+  }
+
+  // ---- demo wiring ----
+  const seedObject = {
+    title: '4colour-pixels',
+    userId: 42,
+    items: ['a', 'b', 'c', 'd'],
+    createdAt: '2025-08-10',
+  };
+
+  let last = generatePixelArtFromObject(seedObject, { grid: 32, scale: 16 });
+
+  document.getElementById('regen').addEventListener('click', () => {
+    last = generatePixelArtFromObject(seedObject, { grid: 32, scale: 16 });
+  });
+  document.getElementById('download').addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = `pixel-art_${last.seed}.png`;
+    link.href = document.getElementById('px').toDataURL('image/png');
+    link.click();
+  });
+</script>
