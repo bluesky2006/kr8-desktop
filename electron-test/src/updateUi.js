@@ -1,10 +1,6 @@
-import { renderImageFromUint8 } from "./utils/imageRenderer";
-import {
-  createEditableTitle,
-  createPill,
-  convertLengthToTime,
-} from "./utils/uiHelpers";
 import { getFormattedDateTime } from "./utils/getFormattedDateTime.js";
+import { renderImageFromUint8 } from "./utils/imageRenderer";
+import { convertLengthToTime, createEditableTitle, createPill } from "./utils/uiHelpers";
 
 const uiContainer = document.getElementById("ui-container");
 
@@ -28,8 +24,7 @@ export const updateUi = (nestedPlaylistObject) => {
   // Render each track
   nestedPlaylistObject.playlist_tracks.forEach((track) => {
     const trackDiv = document.createElement("div");
-    trackDiv.className =
-      "flex flex-col justify-between mb-4 p-3 rounded bg-white shadow";
+    trackDiv.className = "flex flex-col justify-between mb-4 p-3 rounded bg-white shadow";
 
     // Row: text + image
     const topRow = document.createElement("div");
@@ -66,12 +61,8 @@ export const updateUi = (nestedPlaylistObject) => {
     infoDiv.className = "flex flex-wrap items-center gap-2 text-sm mt-2";
 
     infoDiv.appendChild(createPill(`#${track.track_id}`));
-    infoDiv.appendChild(
-      createPill(track.track_bpm ? `${track.track_bpm} BPM` : "BPM N/A")
-    );
-    infoDiv.appendChild(
-      createPill(convertLengthToTime(track.track_length) || "Length N/A")
-    );
+    infoDiv.appendChild(createPill(track.track_bpm ? `${track.track_bpm} BPM` : "BPM N/A"));
+    infoDiv.appendChild(createPill(convertLengthToTime(track.track_length) || "Length N/A"));
 
     trackDiv.appendChild(infoDiv);
     uiContainer.appendChild(trackDiv);
