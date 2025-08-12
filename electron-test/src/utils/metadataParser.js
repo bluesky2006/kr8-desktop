@@ -4,7 +4,7 @@ export async function metadataParser(filePath, index) {
     console.log(metadata, "metadata object");
 
     return {
-      track_id: index + 1,
+      playlist_position: index + 1,
       track_artist: metadata.common.artist || "Unknown Artist",
       track_title: metadata.common.title || "Unknown Title",
       track_bpm: metadata.common.bpm || "",
@@ -14,7 +14,7 @@ export async function metadataParser(filePath, index) {
   } catch (error) {
     console.error(`Error parsing metadata for ${filePath}:`, error.message);
     return {
-      track_id: index + 1,
+      playlist_position: index + 1,
       track_artist: "Unknown Artist",
       track_title: "Unknown Title",
       track_bpm: "",

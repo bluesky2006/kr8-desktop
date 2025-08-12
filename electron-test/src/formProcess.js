@@ -1,6 +1,7 @@
 import { extractTrackPaths } from "./utils/extractTrackPaths";
 import { getParsedTrackMetadata } from "./utils/getParsedTrackMetadata";
 import { updateUi } from "./updateUi";
+import { postPlaylistsByUserId } from "../api";
 
 const dropZone = document.getElementById("drop_zone");
 const dropZoneWrapper = document.getElementById("drop_zone_wrapper");
@@ -9,15 +10,15 @@ const uiContainer = document.getElementById("ui-container");
 const circleGroup = document.querySelector(".circle-group"); // record
 const mainTitle = document.getElementById("main_title");
 const buttons_wrapper = document.getElementById("buttons_wrapper");
+const uploadButton = document.getElementById("upload_button");
+const userID = 1;
+
+let nestedPlaylistObject = {};
 
 if (circleGroup) {
   circleGroup.style.setProperty("--record-y", "-7.1rem");
   requestAnimationFrame(() => {
-    circleGroup.classList.add(
-      "transition-transform",
-      "duration-500",
-      "ease-out"
-    );
+    circleGroup.classList.add("transition-transform", "duration-500", "ease-out");
   });
 }
 
@@ -66,8 +67,11 @@ dropZone.addEventListener("drop", async (e) => {
     const playlistObject = await getParsedTrackMetadata(trackPathArray);
 
     const playlistName = data.name.replace(/\.[^/.]+$/, "");
-    const nestedPlaylistObject = {
+    nestedPlaylistObject = {
+      user_id: userID,
       playlist_name: playlistName,
+      playlist_notes: "fake notes",
+      favourite: false,
       playlist_tracks: [...playlistObject],
     };
 
@@ -102,3 +106,17 @@ startAgainButton.addEventListener("click", () => {
   mainTitle.classList.remove("mb-10");
   mainTitle.classList.add("mb-36");
 });
+
+uploadButton.addEventListener(
+  "click",
+  async () => {
+    try {
+      const res = await postPlaylistsByUserId(userID, nestedPlaylistObject);
+      console.log("Upload OK:", res);
+    } catch (e) {
+      console.error(e);
+      alert(e.message); // temporary surface of the error text/status
+    }
+  },
+  { once: true }
+);
