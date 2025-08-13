@@ -9,9 +9,21 @@ export const updateUi = (nestedPlaylistObject) => {
 
   uiContainer.innerHTML = "";
 
-  // Append editable title input
+  // Append editable title input (icon on the left, turns grey while editing)
+  const titleWrapper = document.createElement("div");
+  titleWrapper.className = "group flex items-center gap-2 mb-4";
+
+  const pencilIcon = document.createElement("i");
+  pencilIcon.className =
+    "fas fa-pencil-alt text-red-400 text-base transition-colors duration-150 group-focus-within:text-gray-400";
+  pencilIcon.style.transform = "translateY(-6px)"; // adjust px value to taste
   const titleInput = createEditableTitle(nestedPlaylistObject);
-  uiContainer.appendChild(titleInput);
+
+  // Order: icon then input
+  titleWrapper.appendChild(pencilIcon);
+  titleWrapper.appendChild(titleInput);
+
+  uiContainer.appendChild(titleWrapper);
 
   const { dbFormat, friendlyFormat } = getFormattedDateTime();
 
