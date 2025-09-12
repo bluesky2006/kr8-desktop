@@ -1,4 +1,9 @@
-export function ActionsBar({ onStartAgain, onUpload }) {
+type ActionsBarProps = {
+  onStartAgain: () => void;
+  onUpload: () => void;
+};
+
+export function ActionsBar({ onStartAgain, onUpload }: ActionsBarProps) {
   return (
     <div className="flex items-center gap-3 mb-4">
       <button

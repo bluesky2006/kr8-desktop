@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-export function Artwork({ data }) {
+export function Artwork({ data }: { data: ArrayBuffer | null }) {
   const url = useMemo(() => {
     if (!data) return null;
     const blob = new Blob([data], { type: "image/jpeg" });
