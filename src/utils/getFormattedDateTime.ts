@@ -1,7 +1,9 @@
 export function getFormattedDateTime(date = new Date()) {
-  const pad = (n) => String(n).padStart(2, "0");
+  function pad(n: number) {
+    return String(n).padStart(2, "0");
+  }
 
-  // Database-safe format (local time)
+  // Database-safe format (local time) - probably redundant if generating on database
   const dbFormat =
     `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
     `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;

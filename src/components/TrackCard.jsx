@@ -1,5 +1,5 @@
 import { Artwork } from "./Artwork.jsx";
-import { convertLengthToTime } from "../utils/convertLengthToTime.js";
+import { convertLengthToTime } from "../utils/convertLengthToTime.ts";
 
 export function TrackCard({ track }) {
   return (
