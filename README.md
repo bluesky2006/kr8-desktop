@@ -17,7 +17,7 @@ Built with **Electron**, **Vite** and **React**, it provides a clean interface f
 2. **Start the app in development**
 
    ```bash
-   npm run dev
+   npm run start
    ```
 
 ---
