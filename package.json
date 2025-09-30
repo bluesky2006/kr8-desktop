@@ -27,6 +27,7 @@
     "@electron-forge/plugin-fuses": "^7.8.3",
     "@electron-forge/plugin-vite": "^7.8.3",
     "@electron/fuses": "^1.8.0",
+    "@types/node": "^24.3.1",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.21",
     "electron": "37.2.6",
@@ -36,11 +37,15 @@
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.3",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
     "electron-squirrel-startup": "^1.0.1",
     "music-metadata": "^11.7.3",
     "music-metadata-browser": "^2.5.11",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "typescript": "^5.9.2"
   }
 }

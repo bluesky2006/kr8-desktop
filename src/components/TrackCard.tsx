@@ -1,9 +1,22 @@
-import { Artwork } from "./Artwork.jsx";
+import { Artwork } from "./Artwork.js";
 import { convertLengthToTime } from "../utils/convertLengthToTime.js";
 
-export function TrackCard({ track }) {
+interface track {
+  playlist_position: number;
+  track_title: string;
+  track_artist: string;
+  track_bpm: number | null;
+  track_length: number | null;
+  track_image: ArrayBuffer | null;
+}
+
+interface TrackCardProps {
+  track: track;
+}
+
+export function TrackCard({ track }: TrackCardProps) {
   return (
-    <div className="relative overflow-hidden flex items-stretch justify-between bg-gray-50 rounded p-3 shadow">
+    <div className="relative o  verflow-hidden flex items-stretch justify-between bg-gray-50 rounded p-3 shadow">
       {/* Small corner triangle with number */}
       <div className="absolute top-0 right-0">
         <div className="relative">

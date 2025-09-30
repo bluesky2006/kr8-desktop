@@ -1,6 +1,11 @@
 import { MdEdit } from "react-icons/md";
 
-export function EditableTitle({ value, onChange }) {
+type EditableTitleProps = {
+  value: string;
+  onChange: (newValue: string) => void;
+};
+
+export function EditableTitle({ value, onChange }: EditableTitleProps) {
   return (
     <header className="my-6 w-full">
       <div className="group flex items-center gap-2 w-full">

@@ -1,21 +1,21 @@
 import React, { useCallback, useState } from "react";
 import { extractTrackPaths } from "../utils/extractTrackPaths";
 import { getParsedTrackMetadata } from "../utils/getParsedTrackMetadata";
-import { postPlaylistsByUserId } from "../../api.js";
-import { Logo } from "../components/Logo.jsx";
-import { Dropzone } from "../components/Dropzone.jsx";
-import { ActionsBar } from "../components/ActionsBar.jsx";
-import { EditableTitle } from "../components/EditableTitle.jsx";
-import { TrackList } from "../components/TrackList.jsx";
+import { postPlaylistsByUserId } from "../../api";
+import { Logo } from "../components/Logo";
+import { Dropzone } from "../components/Dropzone";
+import { ActionsBar } from "../components/ActionsBar";
+import { EditableTitle } from "../components/EditableTitle";
+import { TrackList } from "../components/TrackList";
 
 // tiny helper
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function App() {
   const [playlistName, setPlaylistName] = useState("Playlist");
-  const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = useState<Array<any>>([]);
 
-  const handleFile = useCallback(async (file) => {
+  const handleFile = useCallback(async (file: any) => {
     setPlaylistName(file.name.replace(/\.[^/.]+$/, ""));
     const text = await file.text();
     const paths = await extractTrackPaths(text);
@@ -42,9 +42,9 @@ export default function App() {
       };
       await postPlaylistsByUserId(1, payload);
       console.log("Upload OK");
-    } catch (e) {
-      console.error(e);
-      alert(e.message || "Upload failed");
+    } catch (error: any) {
+      console.error(error);
+      alert(error.message || "Upload failed");
     }
   }, [playlistName, tracks]);
 

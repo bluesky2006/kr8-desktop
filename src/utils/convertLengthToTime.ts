@@ -1,4 +1,4 @@
-export function convertLengthToTime(length) {
+export function convertLengthToTime(length: number) {
   const minutes = Math.floor(length / 60);
   const seconds = Math.floor(length % 60);
 

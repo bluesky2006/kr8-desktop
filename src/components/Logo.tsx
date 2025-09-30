@@ -1,4 +1,4 @@
-export function Logo({ compact }) {
+export function Logo({ compact }: { compact?: boolean }) {
   return (
     <h1
       id="main_title"

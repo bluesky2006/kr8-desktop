@@ -1,15 +1,19 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-export function Dropzone({ onFile }) {
+type DropzoneProps = {
+  onFile: (file: File) => Promise<void>;
+};
+
+export function Dropzone({ onFile }: DropzoneProps) {
   const [dragOver, setDragOver] = useState(false);
 
   // vinyl animation bits (component‑local)
-  const circleRef = useRef(null);
+  const circleRef = useRef<HTMLDivElement | null>(null);
   const initialY = "-7.1rem";
   const peekY = "-3rem"; // show label + hole on hover
   const fullInY = "1.5rem"; // slide fully in on drop
 
-  const setRecordY = (val) => {
+  const setRecordY = (val: string) => {
     if (circleRef.current) {
       circleRef.current.style.setProperty("--record-y", val);
       circleRef.current.style.transform = `translate(-50%, var(--record-y))`;
@@ -28,7 +32,7 @@ export function Dropzone({ onFile }) {
   }, []);
 
   const handleDrop = useCallback(
-    async (e) => {
+    async (e: React.DragEvent<HTMLElement>) => {
       e.preventDefault();
       setDragOver(false);
 
@@ -67,7 +71,7 @@ export function Dropzone({ onFile }) {
       <div
         ref={circleRef}
         className="circle-group pointer-events-none absolute left-1/2 w-56 h-56 bg-black rounded-full z-0 will-change-transform"
-        style={{ transform: "translate(-50%, var(--record-y))", "--record-y": initialY }}
+        style={{ transform: "translate(-50%, var(--record-y))", ["--record-y" as any]: initialY }}
       >
         {/* red label */}
         <div className="absolute inset-0 flex items-center justify-center">
