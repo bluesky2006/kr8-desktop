@@ -16,8 +16,8 @@ interface TrackCardProps {
 
 export function TrackCard({ track }: TrackCardProps) {
   return (
-    <div className="relative o  verflow-hidden flex items-stretch justify-between bg-gray-50 rounded p-3 shadow">
-      {/* Small corner triangle with number */}
+    <div className="relative overflow-hidden flex items-stretch justify-between bg-gray-50 rounded p-3 shadow-lg">
+      {/* Corner triangle with number */}
       <div className="absolute top-0 right-0">
         <div className="relative">
           <div className="w-0 h-0 border-t-[48px] border-l-[48px] border-t-red-500 border-l-transparent" />
@@ -27,7 +27,7 @@ export function TrackCard({ track }: TrackCardProps) {
         </div>
       </div>
 
-      {/* Left column */}
+      {/* Title and artist*/}
       <div className="min-w-0 pr-4 flex flex-col justify-between">
         <div>
           <h2 className="text-lg font-semibold leading-snug break-words">
@@ -50,7 +50,7 @@ export function TrackCard({ track }: TrackCardProps) {
       </div>
 
       {/* Artwork */}
-      <div className="w-28 h-28 shrink-0">
+      <div className="w-28 h-28 shrink-0 border border-gray-300 rounded">
         <Artwork data={track.track_image} />
       </div>
     </div>
