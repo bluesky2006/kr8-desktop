@@ -14,6 +14,5 @@ body {
     sans-serif;
   margin: auto;
   max-width: 38rem;
-  padding: 2rem;
   @apply bg-gray-900;
 }
