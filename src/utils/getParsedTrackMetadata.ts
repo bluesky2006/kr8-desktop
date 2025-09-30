@@ -13,7 +13,7 @@ export async function getParsedTrackMetadata(trackPathArray: string[]) {
 export async function metadataParser(filePath: string, index: number) {
   try {
     const metadata = await window.electronAPI.parseMetadata(filePath);
-    console.log(metadata, "metadata object");
+    // console.log(metadata, "metadata object");
 
     return {
       playlist_position: index + 1,
