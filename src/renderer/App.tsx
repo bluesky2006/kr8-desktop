@@ -8,8 +8,7 @@ import { ActionsBar } from "../components/ActionsBar";
 import { EditableTitle } from "../components/EditableTitle";
 import { TrackList } from "../components/TrackList";
 
-// tiny helper
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function App() {
   const [playlistName, setPlaylistName] = useState("Playlist");
@@ -21,8 +20,7 @@ export default function App() {
     const paths = await extractTrackPaths(text);
     const parsed = await getParsedTrackMetadata(paths);
 
-    // hold to let the vinyl animation land
-    await sleep(750);
+    await pause(750);
     setTracks(parsed);
   }, []);
 
@@ -52,7 +50,6 @@ export default function App() {
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="p-6 w-[90vmin] aspect-square max-w-4xl mx-auto flex flex-col justify-center items-center bg-white rounded">
         <Logo compact={tracks.length > 0} />
-
         {tracks.length === 0 ? (
           <Dropzone onFile={handleFile} />
         ) : (
