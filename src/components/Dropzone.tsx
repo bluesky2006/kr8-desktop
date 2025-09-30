@@ -7,24 +7,20 @@ type DropzoneProps = {
 export function Dropzone({ onFile }: DropzoneProps) {
   const [dragOver, setDragOver] = useState(false);
 
-  // vinyl animation bits (component‑local)
+  // Vinyl animation variables
   const circleRef = useRef<HTMLDivElement | null>(null);
   const initialY = "-7.1rem";
-  const peekY = "-3rem"; // show label + hole on hover
-  const fullInY = "1.5rem"; // slide fully in on drop
+  const peekY = "-3rem";
+  const fullInY = "1.5rem";
 
   const setRecordY = (val: string) => {
-    if (circleRef.current) {
-      circleRef.current.style.setProperty("--record-y", val);
-      circleRef.current.style.transform = `translate(-50%, var(--record-y))`;
-    }
+    circleRef.current?.style.setProperty("--record-y", val);
   };
   const peekRecord = () => setRecordY(peekY);
   const resetRecord = () => setRecordY(initialY);
   const slideInRecord = () => setRecordY(fullInY);
 
   useEffect(() => {
-    // set starting position and enable transition after first paint
     resetRecord();
     requestAnimationFrame(() => {
       circleRef.current?.classList.add("transition-transform", "duration-500", "ease-out");
@@ -42,7 +38,6 @@ export function Dropzone({ onFile }: DropzoneProps) {
         return;
       }
 
-      // animate record in, parent will hold before switching view
       slideInRecord();
       await onFile(file);
     },
@@ -70,14 +65,14 @@ export function Dropzone({ onFile }: DropzoneProps) {
       {/* Vinyl behind */}
       <div
         ref={circleRef}
-        className="circle-group pointer-events-none absolute left-1/2 w-56 h-56 bg-black rounded-full z-0 will-change-transform"
+        className="circle-group pointer-events-none absolute left-1/2 w-56 h-56 bg-black rounded-full z-0 will-change-transform shadow-2xl"
         style={{ transform: "translate(-50%, var(--record-y))", ["--record-y" as any]: initialY }}
       >
-        {/* red label */}
+        {/* Red label */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-14 h-14 bg-red-400 rounded-full" />
         </div>
-        {/* spindle hole */}
+        {/* Spindle hole */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-[6px] h-[6px] bg-black rounded-full" />
         </div>
@@ -85,7 +80,7 @@ export function Dropzone({ onFile }: DropzoneProps) {
 
       {/* Foreground panel carries bg + border and fills the section */}
       <div
-        className={`relative z-10 rounded-lg overflow-hidden transition-colors border-2 border-dashed w-full h-full flex items-center justify-center text-center ${
+        className={`relative z-10 rounded-lg overflow-hidden transition-colors border-2 border-dashed w-full h-full flex items-center justify-center text-center shadow-2xl ${
           dragOver ? "bg-red-100 border-red-400" : "bg-white border-gray-300"
         }`}
       >
