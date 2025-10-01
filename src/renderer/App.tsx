@@ -47,7 +47,7 @@ export default function App() {
   }, [playlistName, tracks]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 py-6">
       <div className="p-6 w-[90vmin] aspect-square max-w-4xl flex flex-col justify-center items-center bg-white rounded">
         <Logo compact={tracks.length > 0} />
         {tracks.length === 0 ? (
