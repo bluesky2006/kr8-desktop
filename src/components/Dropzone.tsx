@@ -77,15 +77,14 @@ export function Dropzone({ onFile }: DropzoneProps) {
           <div className="w-[6px] h-[6px] bg-black rounded-full" />
         </div>
       </div>
-
       {/* Foreground panel carries bg + border and fills the section */}
       <div
         className={`relative z-10 rounded-lg overflow-hidden transition-colors border-2 border-dashed w-full h-full flex items-center justify-center text-center shadow-2xl ${
           dragOver ? "bg-red-100 border-red-400" : "bg-white border-gray-300"
         }`}
       >
-        <p>Drop your playlist file here</p>
-      </div>
+        <p className="pointer-events-none">Drop your playlist file here</p>
+      </div>{" "}
     </section>
   );
 }
