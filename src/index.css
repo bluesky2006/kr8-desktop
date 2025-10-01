@@ -14,5 +14,11 @@ body {
     sans-serif;
   margin: auto;
   max-width: 38rem;
-  @apply bg-gray-900;
+}
+
+@font-face {
+  font-family: "Rubik 80s Fade";
+  src: url("/fonts/Rubik80sFade-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
