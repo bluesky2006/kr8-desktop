@@ -1,18 +1,6 @@
 import { Artwork } from "./Artwork.js";
 import { convertLengthToTime } from "../utils/convertLengthToTime.js";
-
-interface track {
-  playlist_position: number;
-  track_title: string;
-  track_artist: string;
-  track_bpm: number | null;
-  track_length: number | null;
-  track_image: ArrayBuffer | null;
-}
-
-interface TrackCardProps {
-  track: track;
-}
+import { TrackCardProps } from "../types/types.js";
 
 export function TrackCard({ track }: TrackCardProps) {
   return (

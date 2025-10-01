@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-
-type DropzoneProps = {
-  onFile: (file: File) => Promise<void>;
-};
+import { DropzoneProps } from "../types/types";
 
 export function Dropzone({ onFile }: DropzoneProps) {
   const [dragOver, setDragOver] = useState(false);

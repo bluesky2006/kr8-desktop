@@ -1,8 +1,5 @@
 import { TrackCard } from "./TrackCard.js";
-
-interface TrackListProps {
-  tracks: Array<any>;
-}
+import { TrackListProps } from "../types/types.js";
 
 export function TrackList({ tracks }: TrackListProps) {
   return (

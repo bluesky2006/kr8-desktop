@@ -1,7 +1,4 @@
-type ActionsBarProps = {
-  onStartAgain: () => void;
-  onUpload: () => void;
-};
+import { ActionsBarProps } from "../types/types";
 
 export function ActionsBar({ onStartAgain, onUpload }: ActionsBarProps) {
   return (

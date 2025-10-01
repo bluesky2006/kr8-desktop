@@ -1,9 +1,5 @@
 import { MdEdit } from "react-icons/md";
-
-type EditableTitleProps = {
-  value: string;
-  onChange: (newValue: string) => void;
-};
+import { EditableTitleProps } from "../types/types";
 
 export function EditableTitle({ value, onChange }: EditableTitleProps) {
   return (
