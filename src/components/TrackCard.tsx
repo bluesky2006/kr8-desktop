@@ -5,7 +5,6 @@ import { TrackCardProps } from "../types/types.js";
 export function TrackCard({ track }: TrackCardProps) {
   return (
     <div className="relative overflow-hidden flex items-stretch justify-between bg-gray-50 rounded p-3 shadow-lg">
-      {/* Corner triangle with number */}
       <div className="absolute top-0 right-0">
         <div className="relative">
           <div className="w-0 h-0 border-t-[48px] border-l-[48px] border-t-red-500 border-l-transparent" />
@@ -15,7 +14,6 @@ export function TrackCard({ track }: TrackCardProps) {
         </div>
       </div>
 
-      {/* Title and artist*/}
       <div className="min-w-0 pr-4 flex flex-col justify-between">
         <div>
           <h2 className="text-lg font-semibold leading-snug break-words">
@@ -26,7 +24,6 @@ export function TrackCard({ track }: TrackCardProps) {
           </h3>
         </div>
 
-        {/* Badges at bottom */}
         <div className="flex gap-2 text-xs">
           <span className="bg-red-400 text-white px-2 py-1 rounded-md">
             {track.track_bpm ? `${track.track_bpm} BPM` : "BPM N/A"}
@@ -37,7 +34,6 @@ export function TrackCard({ track }: TrackCardProps) {
         </div>
       </div>
 
-      {/* Artwork */}
       <div className="w-28 h-28 shrink-0 border border-gray-300 rounded">
         <Artwork data={track.track_image} />
       </div>
