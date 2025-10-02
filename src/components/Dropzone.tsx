@@ -6,16 +6,14 @@ export function Dropzone({ onFile }: DropzoneProps) {
 
   // Vinyl animation variables
   const circleRef = useRef<HTMLDivElement | null>(null);
-  const initialY = "-7.1rem";
-  const peekY = "-3rem";
-  const fullInY = "1.5rem";
 
   const setRecordY = (val: string) => {
     circleRef.current?.style.setProperty("--record-y", val);
   };
-  const peekRecord = () => setRecordY(peekY);
-  const resetRecord = () => setRecordY(initialY);
-  const slideInRecord = () => setRecordY(fullInY);
+
+  const peekRecord = () => setRecordY("-3rem");
+  const resetRecord = () => setRecordY("-7.1rem");
+  const slideInRecord = () => setRecordY("1.5rem");
 
   useEffect(() => {
     resetRecord();
@@ -63,7 +61,7 @@ export function Dropzone({ onFile }: DropzoneProps) {
       <div
         ref={circleRef}
         className="circle-group pointer-events-none absolute left-1/2 w-56 h-56 bg-black rounded-full z-0 will-change-transform shadow-2xl"
-        style={{ transform: "translate(-50%, var(--record-y))", ["--record-y" as any]: initialY }}
+        style={{ transform: "translate(-50%, var(--record-y))" }}
       >
         {/* Red label */}
         <div className="absolute inset-0 flex items-center justify-center">
