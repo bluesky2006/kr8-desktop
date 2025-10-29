@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 export function Artwork({ data }: { data: ArrayBuffer | null }) {
   const url = useMemo(() => {
