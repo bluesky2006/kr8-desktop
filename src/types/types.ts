@@ -16,15 +16,38 @@ export interface TrackListProps {
   tracks: Array<any>;
 }
 
-export interface track {
+export type TrackImage = {
+  mime: string;
+  base64: string;
+} | null;
+
+export type Track = {
   playlist_position: number;
-  track_title: string;
   track_artist: string;
-  track_bpm: number | null;
-  track_length: number | null;
-  track_image: ArrayBuffer | null;
-}
+  track_title: string;
+  track_bpm?: string | number;
+  track_length?: number;
+  track_image?: TrackImage; // ✅
+  favourite?: boolean;
+};
 
 export interface TrackCardProps {
-  track: track;
+  track: Track;
+}
+
+export interface Data {
+  playlist_name: string;
+  playlist_notes: string;
+  favourite: boolean | null;
+  playlist_tracks: PlaylistTracks[];
+}
+
+export interface PlaylistTracks {
+  playlist_position: number;
+  track_artist: string;
+  track_title: string;
+  track_bpm: number | null;
+  track_length: number;
+  track_image: ArrayBuffer | null;
+  favourite: boolean;
 }

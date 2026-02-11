@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { extractTrackPaths } from "../utils/extractTrackPaths";
 import { getParsedTrackMetadata } from "../utils/getParsedTrackMetadata";
-import { postPlaylistsByUserId } from "../../api";
+import { postPlaylistsByUserId } from "../utils/postPlaylistsByUserId";
 import { Logo } from "../components/Logo";
 import { Dropzone } from "../components/Dropzone";
 import { ActionsBar } from "../components/ActionsBar";
