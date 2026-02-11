@@ -35,7 +35,7 @@ export function TrackCard({ track }: TrackCardProps) {
       </div>
 
       <div className="w-28 h-28 shrink-0 border border-gray-300 rounded">
-        <Artwork data={track.track_image} />
+        <Artwork image={track.track_image} />
       </div>
     </div>
   );
