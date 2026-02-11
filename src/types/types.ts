@@ -12,14 +12,7 @@ export type EditableTitleProps = {
   onChange: (newValue: string) => void;
 };
 
-export interface TrackListProps {
-  tracks: Array<any>;
-}
-
-export type TrackImage = {
-  mime: string;
-  base64: string;
-} | null;
+export type TrackImage = { mime: string; base64: string } | null;
 
 export type Track = {
   playlist_position: number;
@@ -27,27 +20,22 @@ export type Track = {
   track_title: string;
   track_bpm?: string | number;
   track_length?: number;
-  track_image?: TrackImage; // ✅
+  track_image?: TrackImage;
   favourite?: boolean;
 };
+
+export interface TrackListProps {
+  tracks: Track[];
+}
 
 export interface TrackCardProps {
   track: Track;
 }
 
-export interface Data {
+export type CreatePlaylistPayload = {
+  user_id: number;
   playlist_name: string;
-  playlist_notes: string;
-  favourite: boolean | null;
-  playlist_tracks: PlaylistTracks[];
-}
-
-export interface PlaylistTracks {
-  playlist_position: number;
-  track_artist: string;
-  track_title: string;
-  track_bpm: number | null;
-  track_length: number;
-  track_image: ArrayBuffer | null;
-  favourite: boolean;
-}
+  playlist_notes?: string | null;
+  favourite?: boolean;
+  playlist_tracks: Track[];
+};
