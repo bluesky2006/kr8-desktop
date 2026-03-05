@@ -1,6 +1,6 @@
 import { ActionsBarProps } from "../types/types";
 
-export function ActionsBar({ onStartAgain, onUpload }: ActionsBarProps) {
+export function ActionsBar({ onStartAgain, onUpload, isUploading }: ActionsBarProps) {
   return (
     <div className="flex items-center gap-3 mb-4">
       <button
@@ -13,9 +13,17 @@ export function ActionsBar({ onStartAgain, onUpload }: ActionsBarProps) {
       <button
         type="button"
         onClick={onUpload}
-        className="px-3 py-2 rounded bg-red-400 text-white text-sm"
+        disabled={isUploading}
+        className="px-3 py-2 rounded bg-red-400 text-white text-sm disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
       >
-        Upload
+        {isUploading ? (
+          <>
+            <span className="inline-block w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+            Uploading...
+          </>
+        ) : (
+          "Upload"
+        )}
       </button>
     </div>
   );
