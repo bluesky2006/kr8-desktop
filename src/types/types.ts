@@ -1,10 +1,12 @@
 export type ActionsBarProps = {
   onStartAgain: () => void;
   onUpload: () => void;
+  isUploading: boolean;
 };
 
 export type DropzoneProps = {
   onFile: (file: File) => Promise<void>;
+  isParsing: boolean;
 };
 
 export type EditableTitleProps = {
@@ -26,10 +28,19 @@ export type Track = {
 
 export interface TrackListProps {
   tracks: Track[];
+  onMoveTrack: (fromIndex: number, toIndex: number) => void;
+  onDeleteTrack: (index: number) => void;
+  onToggleFavourite: (index: number) => void;
 }
 
 export interface TrackCardProps {
   track: Track;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+  onDelete: () => void;
+  onToggleFavourite: () => void;
+  isFirst: boolean;
+  isLast: boolean;
 }
 
 export type CreatePlaylistPayload = {
